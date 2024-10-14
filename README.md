@@ -14,7 +14,8 @@
 
 
 ------Installation & Run -----<br> </br>
-Frontend --- > npm install  ,   npm start
+Frontend --- > npm install  ,   npm start <br></br>
+
 Backend --- > npm i multer sharp  ,  node index.js 
 
 
