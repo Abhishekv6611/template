@@ -13,7 +13,7 @@
   * sharp
 
 
-------Installation & Run -----
+------Installation & Run -----<br> </br>
 Frontend --- > npm install  ,   npm start
 Backend --- > npm i multer sharp  ,  node index.js 
 
