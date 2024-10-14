@@ -5,30 +5,30 @@ const path = require('path');
 const fs = require('fs');
 
 const app = express();
-const PORT = process.env.PORT || 5000;
+const PORT =  5000;
 
-// Configure multer for file upload
+
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
 
-// API Endpoint for image upload and processing
+
 app.post('/upload', upload.single('avatar'), async (req, res) => {
   try {
-    const frameType = req.body.frame; // 'open-to-work' or 'hiring'
+    const frameType = req.body.frame; 
     const buffer = req.file.buffer;
 
-    // Load the frame image based on user selection
+    
     const framePath = path.join(__dirname, 'public', `${frameType}.png`);
     const frameBuffer = fs.readFileSync(framePath);
 
-    // Process the uploaded image with Sharp
+    
     const processedImage = await sharp(buffer)
       .resize(200, 200)
       .composite([{ input: frameBuffer, blend: 'over' }])
       .png()
       .toBuffer();
 
-    // Send the processed image back to the client
+    
     res.set('Content-Type', 'image/png'); 
     res.send(processedImage);
 
