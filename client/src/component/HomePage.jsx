@@ -21,22 +21,21 @@ function HomePage() {
     try {
         const formData = new FormData();
         
-        // Convert the data URL to a Blob
+        
         const response = await fetch(image);
         const blob = await response.blob();
-        formData.append('avatar', blob); // Append the image blob
-        formData.append('frame', frame); // Append the frame type
+        formData.append('avatar', blob); 
+        formData.append('frame', frame); 
 
-        console.log('Frame type being sent:', frame); // Log the frame type for debugging
+        console.log('Frame type being sent:', frame); 
 
-        // Send the request to the backend
         const res = await fetch('http://localhost:5000/upload', {
             method: 'POST',
             body: formData,
         });
 
         if (!res.ok) {
-            const errorText = await res.text(); // Get error message from the response
+            const errorText = await res.text(); 
             console.error('Failed to upload image:', res.status, errorText);
             return;
         }
@@ -77,7 +76,7 @@ function HomePage() {
         </button>
         <button 
           onClick={() => handleFrameChange('NETwithaifer')} 
-          className={`px-4 py-2 rounded-full ${frame === 'NETwithaifer' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
+          className={`px-5 py-2 rounded-full ${frame === 'NETwithaifer' ? 'bg-blue-500 text-white' : 'bg-gray-200'}`}
         >
           NETwithaifer
         </button>
