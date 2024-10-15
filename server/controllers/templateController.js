@@ -22,7 +22,7 @@ export const getTemplate = [
       const frameBuffer = await fs.promises.readFile(framePath);
 
       const processedImage = await sharp(buffer)
-        .resize(200, 200)
+        .resize(200, 300)
         .composite([{ input: frameBuffer, blend: 'over' }])
         .png()
         .toBuffer();
