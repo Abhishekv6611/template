@@ -1,21 +1,21 @@
 import express from 'express';
-import fs from 'fs'
 import path from 'path';
-import TemplaRouter from './routes/TemplateRoutes'
+import TemplateRoutes from './routes/TemplateRoutes.js';
+import { fileURLToPath } from 'url';
 
 const app = express();
 const PORT = 5000;
 
-app.use(express.json())
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
-const storage = multer.memoryStorage();
-const upload = multer({ storage: storage });
+app.use(express.json());
 
-app.use('/upload',TemplaRouter)
-
+// Routes
+app.use('/upload', TemplateRoutes);
 
 app.use('/public', express.static(path.join(__dirname, 'public')));
 
 app.listen(PORT, () => {
-  console.log(`Server is running on ${PORT}`);
+  console.log(`Server is running on port ${PORT}`);
 });

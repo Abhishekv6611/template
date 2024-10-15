@@ -1,27 +1,38 @@
+import multer from 'multer';
+import sharp from 'sharp';
+import fs from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
 
-export const getTemplate = upload.single('avatar', async (req, res) => {
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
+export const getTemplate = [
+  upload.single('avatar'),
+  async (req, res) => {
     try {
-      const frameType = req.body.frame; 
+      const frameType = req.body.frame;
       const buffer = req.file.buffer;
-  
-      const framePath = path.join(__dirname, 'public', `${frameType}.png`);
-      
-      // Read the frame file asynchronously
+
+      const framePath = path.join(__dirname, '../public', `${frameType}.png`);
+
       const frameBuffer = await fs.promises.readFile(framePath);
-  
-      // Process the image with Sharp
+
       const processedImage = await sharp(buffer)
         .resize(200, 200)
         .composite([{ input: frameBuffer, blend: 'over' }])
         .png()
         .toBuffer();
-  
-      // Set the content type and send the image
-      res.set('Content-Type', 'image/png'); 
+
+      res.set('Content-Type', 'image/png');
       res.send(processedImage);
-  
+
     } catch (error) {
       console.error(error);
       res.status(500).send('Error processing image');
     }
-  });
+  }
+];
